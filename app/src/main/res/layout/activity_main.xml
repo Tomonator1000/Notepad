@@ -36,10 +36,10 @@
             android:orientation="vertical">
 
             <Button
-                android:id="@+id/button3"
+                android:id="@+id/btnNote1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Button" />
+                android:text="DEFAULT NOTE #1" />
         </LinearLayout>
     </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>
