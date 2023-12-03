@@ -3,17 +3,20 @@ package com.example.notepad;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.nfc.Tag;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 
+
+//FIXME: LAG on switch between views.
+//FIXME: MAINACTIVITY does not actively 'save'.
+//TODO: UPDATE note name to button display name.
+//TODO: multiple if statements for note.isEmpty check, otherwise set to default "New Note #1" & " ";
 public class MainActivity extends AppCompatActivity {
-    Button btnCreateNote, myButton;
+    Button btnCreateNote, newNoteButton;
     ScrollView scrollViewNotes;
     LinearLayout buttonLayout;
     Intent NotepadActivity;
@@ -42,13 +45,13 @@ public class MainActivity extends AppCompatActivity {
         count++;
         index = nextAvailableID();
         System.out.println(index);
-        myButton = new Button(this);
-        myButton.setText("New Note" + count);
-        myButton.setId(index);
+        newNoteButton = new Button(this);
+        newNoteButton.setText("New Note #" + count);
+        newNoteButton.setId(index);
 
         LinearLayout ll = findViewById(R.id.buttonLayout);
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-        ll.addView(myButton, lp);
+        ll.addView(newNoteButton, lp);
 
         Notepad n = new Notepad();
         n.setCount(index);
@@ -56,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
         //notepadDatabase.arrayIndex = index;
         //set opennote to on click for that dynamic button note
 
-        myButton.setOnClickListener(new View.OnClickListener() {
+        newNoteButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
 
                 startActivity(NotepadActivity);

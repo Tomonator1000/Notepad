@@ -35,13 +35,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:onClick="openNote"
-            android:orientation="vertical">
-
-            <Button
-                android:id="@+id/btnNote1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="DEFAULT NOTE #1" />
-        </LinearLayout>
+            android:orientation="vertical"/>
     </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

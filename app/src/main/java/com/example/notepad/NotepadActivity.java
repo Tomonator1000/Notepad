@@ -30,6 +30,7 @@ public class NotepadActivity extends AppCompatActivity {
 
     protected void onInit(){
         noteName = findViewById(R.id.etNoteName);
+        //TODO: updated noteNote to multiLine textbox. might implicate problems
         noteNote = findViewById(R.id.etNoteNote);
         noteSave = findViewById(R.id.btnSaveEditNote);
         noteCancel = findViewById(R.id.btnCancelEditNote);
@@ -43,6 +44,10 @@ public class NotepadActivity extends AppCompatActivity {
     }
 
     public void onSaveClick(View v){
+        //FIXME
+        /*
+        should not check if both are empty. seperate if statements for both title & note, if empty then default.
+         */
         if(!(noteName.getText().toString().isEmpty() && noteNote.getText().toString().isEmpty())){
             notepadDatabase.setNotepadIndex(notepadDatabase.arrayIndex, noteName.getText().toString(), noteName.getText().toString());
             /*
