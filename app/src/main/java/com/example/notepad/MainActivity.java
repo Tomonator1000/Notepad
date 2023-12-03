@@ -28,10 +28,15 @@ public class MainActivity extends AppCompatActivity {
         scrollViewNotes = findViewById(R.id.buttonScrollView);
         buttonLayout = findViewById(R.id.buttonLayout);
 
-        NotepadActivity = new Intent(this, NotepadActivity.class);
+        NotepadActivity = new Intent(this,NotepadActivity.class);
     }
 
     public void createNote(View v){
+        openNote(v,1);
+    }
+
+    public void openNote(View view,int noteNum){
+        NotepadActivity.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         //TODO: BUTTON CREATES NEW NOTE BUTTON.
         Button myButton = new Button(this);
         myButton.setText("Push Me");
@@ -43,4 +48,5 @@ public class MainActivity extends AppCompatActivity {
         NotepadActivity.addFlags(Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT);
         startActivity(NotepadActivity);
     }
+
 }
