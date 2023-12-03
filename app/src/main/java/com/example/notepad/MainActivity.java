@@ -109,26 +109,4 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }
-
-    /*
-    @Override
-    protected void onRestart() {
-        super.onRestart();
-        for (int i = 0; i < notepadDatabase.notepad.length; i++) {
-            if(notepadDatabase.notepad[i].getTitle() != null ){
-                myButton = new Button(this);
-                myButton.setText("New Note" + count);
-                myButton.setId(index);
-
-                LinearLayout ll = findViewById(R.id.buttonLayout);
-                LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-                ll.addView(myButton, lp);
-            }
-        }
-        View parentView = findViewById(R.id.buttonLayout);
-        myButton = parentView.findViewById(notepadDatabase.arrayIndex);
-        myButton.setText(notepadDatabase.notepad[notepadDatabase.arrayIndex].getTitle());
-    }
-
-     */
 }
