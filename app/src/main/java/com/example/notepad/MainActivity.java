@@ -32,7 +32,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void createNote(View v){
-        //TODO: BUTTON CREATES NEW NOTE BUTTON.
+        openNote(v,1);
+    }
+
+    public void openNote(View view,int noteNum){
         NotepadActivity.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(NotepadActivity);
     }
