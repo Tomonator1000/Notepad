@@ -1,9 +1,30 @@
 package com.example.notepad;
 
 public class NotepadDatabase {
-    public int arrayIndex = 0;
+    private static NotepadDatabase instance;
+    private int arrayIndex;
+    private boolean createNewNote = false;
+    private Notepad[] getNotepad;
 
-    public Notepad[] notepad = new Notepad[30];
+    NotepadDatabase() {
+        arrayIndex = 0;
+        getNotepad = new Notepad[100];
+    }
+
+    public static NotepadDatabase getInstance() {
+        if (instance == null) {
+            instance = new NotepadDatabase();
+        }
+        return instance;
+    }
+
+    public boolean isCreateNewNote() {
+        return createNewNote;
+    }
+
+    public void setCreateNewNote(boolean createNewNote) {
+        this.createNewNote = createNewNote;
+    }
 
     public int getArrayIndex() {
         return arrayIndex;
@@ -14,11 +35,11 @@ public class NotepadDatabase {
     }
 
     public Notepad[] getNotepad() {
-        return notepad;
+        return getNotepad;
     }
 
     public void setNotepadIndex(int arrayIndex, String title, String note) {
-        notepad[arrayIndex].setTitle(title);
-        notepad[arrayIndex].setNote(note);
+        getNotepad[arrayIndex].setTitle(title);
+        getNotepad[arrayIndex].setNote(note);
     }
 }

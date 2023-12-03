@@ -18,14 +18,13 @@ public class NotepadActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_notepad);
+        //new NotepadDatabase();
+        notepadDatabase = NotepadDatabase.getInstance();
+
+        notepadDatabase.setCreateNewNote(false);
         onInit();
-        notepadDatabase = new NotepadDatabase();
 
         MainActivity = new Intent(this, MainActivity.class);
-
-        if(notepadDatabase.notepad[notepadDatabase.arrayIndex] != null){
-            noteName.setText(notepadDatabase.notepad[notepadDatabase.arrayIndex].getTitle());
-        }
     }
 
     protected void onInit(){
@@ -34,6 +33,11 @@ public class NotepadActivity extends AppCompatActivity {
         noteNote = findViewById(R.id.etNoteNote);
         noteSave = findViewById(R.id.btnSaveEditNote);
         noteCancel = findViewById(R.id.btnCancelEditNote);
+
+        if(notepadDatabase.getNotepad()[notepadDatabase.getArrayIndex()] != null){
+            noteName.setText(notepadDatabase.getNotepad()[notepadDatabase.getArrayIndex()].getTitle());
+            noteNote.setText(notepadDatabase.getNotepad()[notepadDatabase.getArrayIndex()].getNote());
+        }
     }
 
 
@@ -47,9 +51,12 @@ public class NotepadActivity extends AppCompatActivity {
         //FIXME
         /*
         should not check if both are empty. seperate if statements for both title & note, if empty then default.
+        Tommy: i check if they are both not empty, theres a not at the front of that if statement
          */
-        if(!(noteName.getText().toString().isEmpty() && noteNote.getText().toString().isEmpty())){
-            notepadDatabase.setNotepadIndex(notepadDatabase.arrayIndex, noteName.getText().toString(), noteName.getText().toString());
+        int buttonId = getIntent().getIntExtra("button", -1);
+        if(!(noteName.getText().toString().isEmpty() || noteNote.getText().toString().isEmpty()) && buttonId != -1){
+            notepadDatabase.setNotepadIndex(buttonId, noteName.getText().toString(), noteNote.getText().toString());
+            notepadDatabase.setCreateNewNote(true);
             /*
             notepadDatabase.notepad[notepadDatabase.arrayIndex].setTitle(noteName.getText().toString());
             notepadDatabase.notepad[notepadDatabase.arrayIndex].setNote(noteNote.getText().toString());
