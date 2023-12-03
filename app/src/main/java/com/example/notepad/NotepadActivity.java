@@ -12,14 +12,20 @@ public class NotepadActivity extends AppCompatActivity {
     EditText noteName, noteNote;
     Button noteSave, noteCancel;
     Intent MainActivity;
+    NotepadDatabase notepadDatabase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_notepad);
         onInit();
+        notepadDatabase = new NotepadDatabase();
 
         MainActivity = new Intent(this, MainActivity.class);
+
+        if(notepadDatabase.notepad[notepadDatabase.arrayIndex] != null){
+            noteName.setText(notepadDatabase.notepad[notepadDatabase.arrayIndex].getTitle());
+        }
     }
 
     protected void onInit(){
@@ -32,6 +38,21 @@ public class NotepadActivity extends AppCompatActivity {
 
     public void onCancelClick(View v){
         MainActivity.addFlags(Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT);
-        startActivity(MainActivity);
+        finish();
+        //startActivity(MainActivity);
+    }
+
+    public void onSaveClick(View v){
+        if(!(noteName.getText().toString().isEmpty() && noteNote.getText().toString().isEmpty())){
+            notepadDatabase.setNotepadIndex(notepadDatabase.arrayIndex, noteName.getText().toString(), noteName.getText().toString());
+            /*
+            notepadDatabase.notepad[notepadDatabase.arrayIndex].setTitle(noteName.getText().toString());
+            notepadDatabase.notepad[notepadDatabase.arrayIndex].setNote(noteNote.getText().toString());
+            System.out.println(notepadDatabase.notepad[notepadDatabase.arrayIndex].getTitle());
+
+             */
+        }
+        finish();
+        //startActivity(MainActivity);
     }
 }
