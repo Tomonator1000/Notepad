@@ -28,13 +28,19 @@ public class MainActivity extends AppCompatActivity {
         scrollViewNotes = findViewById(R.id.buttonScrollView);
         buttonLayout = findViewById(R.id.buttonLayout);
 
-        NotepadActivity = new Intent(this,NotepadActivity.class);
+        NotepadActivity = new Intent(this, NotepadActivity.class);
     }
 
     public void createNote(View v){
         //TODO: BUTTON CREATES NEW NOTE BUTTON.
-        NotepadActivity.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        Button myButton = new Button(this);
+        myButton.setText("Push Me");
+
+        LinearLayout ll = findViewById(R.id.buttonLayout);
+        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        ll.addView(myButton, lp);
+
+        NotepadActivity.addFlags(Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT);
         startActivity(NotepadActivity);
     }
-
 }
