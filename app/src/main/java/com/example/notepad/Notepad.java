@@ -3,15 +3,6 @@ package com.example.notepad;
 public class Notepad {
     private String title;
     private String note;
-    private int count;
-
-    public int getCount() {
-        return count;
-    }
-
-    public void setCount(int count) {
-        this.count = count;
-    }
 
     public String getTitle() {
         return title;

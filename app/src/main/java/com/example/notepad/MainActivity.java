@@ -59,7 +59,6 @@ public class MainActivity extends AppCompatActivity {
 
         //creates a new notepad to save data to said array index
         Notepad n = new Notepad();
-        n.setCount(index);
         notepadDatabase.getNotepad()[index] = n;
         System.out.println(index);
         //notepadDatabase.arrayIndex = index;
