@@ -92,30 +92,6 @@ public class MainActivity extends AppCompatActivity {
         startActivity(NotepadActivity);
     }
 
-    public int nextAvailableID(){
-        //finds the next spot in the array that is empty
-        int count = 0;
-        for (int i = 0; i < notepadDatabase.getNotepad().length; i++) {
-            if(notepadDatabase.getNotepad()[i] == null){
-                count = i;
-                System.out.println(count);
-                return count;
-            }
-        }
-        return -1;
-    }
-    public int objectsInList(){
-        //finds out how many objects exist in the list
-        int count = 0;
-        for (int i = 0; i < notepadDatabase.getNotepad().length; i++) {
-            if(notepadDatabase.getNotepad()[i] != null){
-                count++;
-            }
-        }
-        return count;
-    }
-
-
     @Override
     public void onResume() {
         //runs whenever the app is resumed or comes back from second activity
@@ -144,4 +120,28 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }
+
+    public int nextAvailableID(){
+        //finds the next spot in the array that is empty
+        int count = 0;
+        for (int i = 0; i < notepadDatabase.getNotepad().length; i++) {
+            if(notepadDatabase.getNotepad()[i] == null){
+                count = i;
+                System.out.println(count);
+                return count;
+            }
+        }
+        return -1;
+    }
+    public int objectsInList(){
+        //finds out how many objects exist in the list
+        int count = 0;
+        for (int i = 0; i < notepadDatabase.getNotepad().length; i++) {
+            if(notepadDatabase.getNotepad()[i] != null){
+                count++;
+            }
+        }
+        return count;
+    }
+
 }
