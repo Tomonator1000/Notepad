@@ -44,7 +44,6 @@ public class NotepadActivity extends AppCompatActivity {
     public void onCancelClick(View v){
         MainActivity.addFlags(Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT);
         finish();
-        //startActivity(MainActivity);
     }
 
     public void onSaveClick(View v){
@@ -53,17 +52,13 @@ public class NotepadActivity extends AppCompatActivity {
         should not check if both are empty. seperate if statements for both title & note, if empty then default.
          */
         int buttonId = getIntent().getIntExtra("button", -1);
-        if(!(noteName.getText().toString().isEmpty() || noteNote.getText().toString().isEmpty()) && buttonId != -1){
-            notepadDatabase.setNotepadIndex(buttonId, noteName.getText().toString(), noteNote.getText().toString());
+        if(!(noteName.getText().toString().isEmpty()) && buttonId != -1){
+            notepadDatabase.setNotepadIndex(buttonId, noteName.getText().toString());
+            if(!noteNote.getText().toString().isEmpty()){
+                notepadDatabase.setNotepadIndex(buttonId, noteName.getText().toString(), noteNote.getText().toString());
+            }
             notepadDatabase.setCreateNewNote(true);
-            /*
-            notepadDatabase.notepad[notepadDatabase.arrayIndex].setTitle(noteName.getText().toString());
-            notepadDatabase.notepad[notepadDatabase.arrayIndex].setNote(noteNote.getText().toString());
-            System.out.println(notepadDatabase.notepad[notepadDatabase.arrayIndex].getTitle());
-
-             */
         }
         finish();
-        //startActivity(MainActivity);
     }
 }

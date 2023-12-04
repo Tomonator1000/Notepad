@@ -42,4 +42,7 @@ public class NotepadDatabase {
         getNotepad[arrayIndex].setTitle(title);
         getNotepad[arrayIndex].setNote(note);
     }
+    public void setNotepadIndex(int arrayIndex, String title) {
+        getNotepad[arrayIndex].setTitle(title);
+    }
 }
