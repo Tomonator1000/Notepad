@@ -22,6 +22,7 @@ public class NotepadActivity extends AppCompatActivity {
         notepadDatabase = NotepadDatabase.getInstance();
 
         notepadDatabase.setCreateNewNote(false);
+        notepadDatabase.setDeleteNote(false);
         onInit();
 
         MainActivity = new Intent(this, MainActivity.class);
@@ -59,6 +60,13 @@ public class NotepadActivity extends AppCompatActivity {
             }
             notepadDatabase.setCreateNewNote(true);
         }
+        finish();
+    }
+
+    public void onDeleteClick(View v){
+        int buttonId = getIntent().getIntExtra("button", -1);
+        notepadDatabase.deleteNotepadIndex(buttonId);
+        notepadDatabase.setDeleteNote(true);
         finish();
     }
 }

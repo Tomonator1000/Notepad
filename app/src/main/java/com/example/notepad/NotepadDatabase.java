@@ -4,6 +4,7 @@ public class NotepadDatabase {
     private static NotepadDatabase instance;
     private int arrayIndex;
     private boolean createNewNote = false;
+    private boolean deleteNote = false;
     private Notepad[] getNotepad;
 
     NotepadDatabase() {
@@ -44,5 +45,16 @@ public class NotepadDatabase {
     }
     public void setNotepadIndex(int arrayIndex, String title) {
         getNotepad[arrayIndex].setTitle(title);
+    }
+    public void deleteNotepadIndex(int arrayIndex){
+       getNotepad[arrayIndex] = null;
+    }
+
+    public boolean isDeleteNote() {
+        return deleteNote;
+    }
+
+    public void setDeleteNote(boolean deleteNote) {
+        this.deleteNote = deleteNote;
     }
 }

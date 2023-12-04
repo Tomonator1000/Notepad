@@ -12,9 +12,8 @@ import android.widget.ScrollView;
 
 
 //FIXME: LAG on switch between views.
-//FIXME: MAINACTIVITY does not actively 'save'. (its cause the app crashes in the second half when saving a note due to not fetching the right id)
 //TODO: UPDATE note name to button display name.
-//TODO: multiple if statements for note.isEmpty check, otherwise set to default "New Note #1" & " ";
+//TODO: multiple if statements for note.isEmpty check, otherwise set to default "New Note #1" & " "; (huh?)
 public class MainActivity extends AppCompatActivity {
     Button btnCreateNote, newNoteButton;
     ScrollView scrollViewNotes;
@@ -23,6 +22,7 @@ public class MainActivity extends AppCompatActivity {
     Bundle savedInstanceState;
     int count = 0, index;
     NotepadDatabase notepadDatabase;
+    Button currentButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
         System.out.println(index);
         //notepadDatabase.arrayIndex = index;
 
-        //click listener used to determine what id the button is
+        //click listener used to determine what id the button is (uses lambda)
         newNoteButton.setOnClickListener(v1 -> openNote((Button) v1));
 
         btnCreateNote.setClickable(false);
@@ -71,6 +71,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void openNote(Button button) {
         // runs when the note is opened
+        currentButton = button;
         NotepadActivity.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
         notepadDatabase.setArrayIndex(button.getId());
         NotepadActivity.putExtra("button", button.getId()); //passes the button id to the other program
@@ -107,17 +108,23 @@ public class MainActivity extends AppCompatActivity {
         //runs whenever the app is resumed or comes back from second activity
         super.onResume();
         if(notepadDatabase.isCreateNewNote()) {
+            //allows the user to create a new note if they edited the last note
             btnCreateNote.setClickable(true);
         }
         //ensures the method does not run on start
         if(objectsInList() != 0){
+            //finds the group of buttons and makes it a ViewGroup
             ViewGroup parentLayout = findViewById(R.id.buttonLayout);
 
+            if(notepadDatabase.isDeleteNote()){
+                //save the button from earlier for quick and easy deletion
+                buttonLayout.removeView(currentButton);
+            }
             for (int i = 0; i < parentLayout.getChildCount(); i++) {
+                //hooks up every button to a childView under the parent view
                 View childView = parentLayout.getChildAt(i);
 
-                System.out.println("Iteration " + i + ", Child ID: " + childView.getId());
-
+                //if statement checks if its the right button then renames it
                 if (childView instanceof Button && childView.getId() == index) {
                     ((Button) childView).setText(notepadDatabase.getNotepad()[index].getTitle());
                 }
