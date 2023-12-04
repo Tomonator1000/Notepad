@@ -48,11 +48,8 @@ public class NotepadActivity extends AppCompatActivity {
     }
 
     public void onSaveClick(View v){
-        //FIXME
-        /*
-        should not check if both are empty. seperate if statements for both title & note, if empty then default.
-         */
-        int buttonId = getIntent().getIntExtra("button", -1);
+        //saves the note to the current index the buttonid is on
+        int buttonId = getIntent().getIntExtra("button", -1); //gets my extra i passed in
         if(!(noteName.getText().toString().isEmpty()) && buttonId != -1){
             notepadDatabase.setNotepadIndex(buttonId, noteName.getText().toString());
             if(!noteNote.getText().toString().isEmpty()){
@@ -64,6 +61,7 @@ public class NotepadActivity extends AppCompatActivity {
     }
 
     public void onDeleteClick(View v){
+        //deletes the notepad index and sets the boolean to true so i can know to delete the button when the app returns to MainActivity
         int buttonId = getIntent().getIntExtra("button", -1);
         notepadDatabase.deleteNotepadIndex(buttonId);
         notepadDatabase.setDeleteNote(true);

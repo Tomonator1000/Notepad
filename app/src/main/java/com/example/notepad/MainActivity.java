@@ -3,16 +3,19 @@ package com.example.notepad;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.Outline;
+import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewOutlineProvider;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 
 
 //FIXME: LAG on switch between views.
-//TODO: UPDATE note name to button display name.
 //TODO: multiple if statements for note.isEmpty check, otherwise set to default "New Note #1" & " "; (huh?)
 public class MainActivity extends AppCompatActivity {
     Button btnCreateNote, newNoteButton;
@@ -39,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
 
         NotepadActivity = new Intent(this,NotepadActivity.class);
         new NotepadDatabase();
+        //returns an instance of Notepad to have the same version through activities (MainActivity and NotepadActivity respectively)
         notepadDatabase = NotepadDatabase.getInstance();
     }
 
@@ -51,10 +55,18 @@ public class MainActivity extends AppCompatActivity {
         newNoteButton = new Button(this);
         newNoteButton.setText("New Note #" + count);
         newNoteButton.setId(index);
+        //newNoteButton.setBackgroundColor(Color.CYAN);
+
+        //sets the background of the button
+        GradientDrawable drawable = new GradientDrawable();
+        drawable.setShape(GradientDrawable.RECTANGLE);
+        drawable.setStroke(5, Color.BLUE);
+        drawable.setColor(Color.CYAN);
+        newNoteButton.setBackground(drawable);
 
         //adds it to layout
         LinearLayout ll = findViewById(R.id.buttonLayout);
-        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 200);
         ll.addView(newNoteButton, lp);
 
         //creates a new notepad to save data to said array index
@@ -71,11 +83,12 @@ public class MainActivity extends AppCompatActivity {
 
     public void openNote(Button button) {
         // runs when the note is opened
-        currentButton = button;
+        currentButton = button; //sets the button so i can delete it later(if user wants to delete)
+
+        //not sure what flag to use, clearing the not could save processing power
         NotepadActivity.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
         notepadDatabase.setArrayIndex(button.getId());
         NotepadActivity.putExtra("button", button.getId()); //passes the button id to the other program
-        System.out.println(button.getId());
         startActivity(NotepadActivity);
     }
 
