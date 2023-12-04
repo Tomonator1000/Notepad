@@ -51,7 +51,6 @@ public class NotepadActivity extends AppCompatActivity {
         //FIXME
         /*
         should not check if both are empty. seperate if statements for both title & note, if empty then default.
-        Tommy: i check if they are both not empty, theres a not at the front of that if statement
          */
         int buttonId = getIntent().getIntExtra("button", -1);
         if(!(noteName.getText().toString().isEmpty() || noteNote.getText().toString().isEmpty()) && buttonId != -1){
