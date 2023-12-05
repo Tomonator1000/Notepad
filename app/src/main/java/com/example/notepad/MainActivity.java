@@ -13,9 +13,6 @@ import android.view.ViewOutlineProvider;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
-
-
-//FIXME: LAG on switch between views.
 public class MainActivity extends AppCompatActivity {
     Button btnCreateNote, newNoteButton; //ui buttons
     ScrollView scrollViewNotes; //Scrolling
@@ -53,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
 
         //creates a new button
         newNoteButton = new Button(this);
-        newNoteButton.setText("New Note #" + count);
+        newNoteButton.setText("(New) Note #" + count);
         newNoteButton.setId(index); //sets ID for identification later(having index and button ID be the same number simplifies the process)
 
         //sets the background of the dynamic note button
@@ -100,7 +97,6 @@ public class MainActivity extends AppCompatActivity {
             btnCreateNote.setClickable(true);
             btnCreateNote.setText("CREATE NEW NOTE");
         }
-
         //finds the group of buttons in the buttonLayout and makes it a ViewGroup
         ViewGroup parentLayout = findViewById(R.id.buttonLayout);
 

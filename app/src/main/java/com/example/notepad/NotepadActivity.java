@@ -47,7 +47,11 @@ public class NotepadActivity extends AppCompatActivity {
 
     public void onCancelClick(View v){
         //just sends you back if your cancel
-        notepadDatabase.setCreateNewNote(true);
+        int buttonId = getIntent().getIntExtra("button", -1); //gets the extra that was passed in from MainActivity
+        if(noteName.getText().toString().isEmpty()){
+            notepadDatabase.setNotepadIndex(buttonId, "NOTE " + (buttonId + 1));
+            notepadDatabase.setCreateNewNote(true);
+        }
         MainActivity.addFlags(Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT);
         finish();
     }
@@ -66,6 +70,7 @@ public class NotepadActivity extends AppCompatActivity {
             notepadDatabase.setCreateNewNote(true);
         } else {
             notepadDatabase.setNotepadIndex(buttonId, "NOTE " + (buttonId + 1));
+            notepadDatabase.setCreateNewNote(true);
         }
         finish();
     }
@@ -76,7 +81,6 @@ public class NotepadActivity extends AppCompatActivity {
         int buttonId = getIntent().getIntExtra("button", -1);
         notepadDatabase.deleteNotepadIndex(buttonId);
         notepadDatabase.setDeleteNote(true);
-        notepadDatabase.setCreateNewNote(true);
         finish();
     }
 }
