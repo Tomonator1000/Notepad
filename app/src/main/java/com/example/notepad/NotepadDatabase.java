@@ -1,22 +1,22 @@
 package com.example.notepad;
 
 public class NotepadDatabase {
+    //DECLARED VARS
     private static NotepadDatabase instance; //makes an instance so the same database is available to both activities
     private int arrayIndex; //currentIndex that is being used in the notepadActivity
     private boolean createNewNote = false; //boolean to check to create new note
     private boolean deleteNote = false; //boolean to check if it can delete a note
     private Notepad[] getNotepad; //database itself, uses the Notepad class
 
-    NotepadDatabase() {
-        //default constructor will instantiate the variables
+    NotepadDatabase() { //default constructor
         arrayIndex = 0;
         getNotepad = new Notepad[100];
     }
-
+    //GETTERS & SETTERS
     public static NotepadDatabase getInstance() {
-        //runs whenever you want an instance of notepad database and not a new one
-        //allows synced used of the database between activities
-        if (instance == null) {
+        //gets instance of Database rather than creating new instance.
+        //syncs database between activities.
+        if (instance == null) { //creates new instance if instance is null.
             instance = new NotepadDatabase();
         }
         return instance;
@@ -26,7 +26,6 @@ public class NotepadDatabase {
     public boolean isCreateNewNote() {
         return createNewNote;
     }
-
     public void setCreateNewNote(boolean createNewNote) {
         this.createNewNote = createNewNote;
     }
@@ -34,7 +33,6 @@ public class NotepadDatabase {
     public int getArrayIndex() {
         return arrayIndex;
     }
-
     public void setArrayIndex(int arrayIndex) {
         this.arrayIndex = arrayIndex;
     }
@@ -49,7 +47,7 @@ public class NotepadDatabase {
         getNotepad[arrayIndex].setNote(note);
     }
     public void setNotepadIndex(int arrayIndex, String title) {
-        //used to set only the name variable at a given index, used when no note is set, but a title was
+        //used to set only the name variable at a given index, allows for empty note but given title.
         getNotepad[arrayIndex].setTitle(title);
     }
     public void deleteNotepadIndex(int arrayIndex){
@@ -59,8 +57,12 @@ public class NotepadDatabase {
     public boolean isDeleteNote() {
         return deleteNote;
     }
-
     public void setDeleteNote(boolean deleteNote) {
         this.deleteNote = deleteNote;
+    }
+
+
+    public void setGetNotepad(Notepad[] getNotepad) { //setNotepad to recreate & copy exisiting array over.
+        this.getNotepad = getNotepad;
     }
 }
