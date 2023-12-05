@@ -16,21 +16,18 @@ import android.widget.ScrollView;
 
 
 //FIXME: LAG on switch between views.
-//TODO: multiple if statements for note.isEmpty check, otherwise set to default "New Note #1" & " "; (huh?)
 public class MainActivity extends AppCompatActivity {
-    Button btnCreateNote, newNoteButton;
-    ScrollView scrollViewNotes;
-    LinearLayout buttonLayout;
-    Intent NotepadActivity;
-    Bundle savedInstanceState;
-    int count = 0, index;
-    NotepadDatabase notepadDatabase;
-    Button currentButton;
+    Button btnCreateNote, newNoteButton; //ui buttons
+    ScrollView scrollViewNotes; //Scrolling
+    LinearLayout buttonLayout; //Layout for buttons so we can dynamically make buttons
+    Intent NotepadActivity; //The notepad activity that we use to start a separate UI for notes
+    int count = 0, index; //count counts how many buttons have been made, index is the current index the app is on
+    NotepadDatabase notepadDatabase; //database for all out notes
+    Button currentButton; //dynamically created button used to open notes
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.savedInstanceState = savedInstanceState;
         setContentView(R.layout.activity_main);
         onInit();
     }
@@ -49,15 +46,13 @@ public class MainActivity extends AppCompatActivity {
     public void createNote(View v){
         count++; //counts for button# when creating a new button to print this number
         index = nextAvailableID(); //finds the next id not taken by a object
-        System.out.println(index);
 
         //creates a new button
         newNoteButton = new Button(this);
         newNoteButton.setText("New Note #" + count);
-        newNoteButton.setId(index);
-        //newNoteButton.setBackgroundColor(Color.CYAN);
+        newNoteButton.setId(index); //sets ID for identification later(having index and button ID be the same number simplifies the process)
 
-        //sets the background of the button
+        //sets the background of the dynamic note button
         GradientDrawable drawable = new GradientDrawable();
         drawable.setShape(GradientDrawable.RECTANGLE);
         drawable.setStroke(5, Color.BLUE);
@@ -66,14 +61,13 @@ public class MainActivity extends AppCompatActivity {
 
         //adds it to layout
         LinearLayout ll = findViewById(R.id.buttonLayout);
-        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 200);
+        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 250);
         ll.addView(newNoteButton, lp);
 
         //creates a new notepad to save data to said array index
         Notepad n = new Notepad();
         notepadDatabase.getNotepad()[index] = n;
         System.out.println(index);
-        //notepadDatabase.arrayIndex = index;
 
         //click listener used to determine what id the button is (uses lambda)
         newNoteButton.setOnClickListener(v1 -> openNote((Button) v1));
@@ -83,9 +77,9 @@ public class MainActivity extends AppCompatActivity {
 
     public void openNote(Button button) {
         // runs when the note is opened
-        currentButton = button; //sets the button so i can delete it later(if user wants to delete)
+        currentButton = button; //saves the button so it can be deleted later(if user clicks delete)
 
-        //not sure what flag to use, clearing the not could save processing power
+        //not sure what flag to use, clearing the activity could save processing power
         NotepadActivity.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
         notepadDatabase.setArrayIndex(button.getId());
         NotepadActivity.putExtra("button", button.getId()); //passes the button id to the other program
@@ -94,7 +88,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onResume() {
-        //runs whenever the app is resumed or comes back from second activity
+        //onResume() runs whenever the app is resumed or comes back from second activity
         super.onResume();
         if(notepadDatabase.isCreateNewNote()) {
             //allows the user to create a new note if they edited the last note
@@ -102,12 +96,13 @@ public class MainActivity extends AppCompatActivity {
         }
         //ensures the method does not run on start
         if(objectsInList() != 0){
-            //finds the group of buttons and makes it a ViewGroup
+            //finds the group of buttons in the buttonLayout and makes it a ViewGroup
             ViewGroup parentLayout = findViewById(R.id.buttonLayout);
 
             if(notepadDatabase.isDeleteNote()){
                 //save the button from earlier for quick and easy deletion
                 buttonLayout.removeView(currentButton);
+                count--;
             }
             for (int i = 0; i < parentLayout.getChildCount(); i++) {
                 //hooks up every button to a childView under the parent view
