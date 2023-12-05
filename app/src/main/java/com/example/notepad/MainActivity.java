@@ -55,8 +55,8 @@ public class MainActivity extends AppCompatActivity {
         //sets the background of the dynamic note button
         GradientDrawable drawable = new GradientDrawable();
         drawable.setShape(GradientDrawable.RECTANGLE);
-        drawable.setStroke(5, Color.BLUE);
-        drawable.setColor(Color.CYAN);
+        drawable.setStroke(10, Color.DKGRAY);
+        drawable.setColor(Color.LTGRAY);
         newNoteButton.setBackground(drawable);
 
         //adds it to layout
