@@ -16,6 +16,10 @@ import android.widget.ScrollView;
 //FIXME: escape functionality bug
 //FIXME: clicking existing note after creating new note will result in empty text on button when returning back to mainactivity.
 //TODO: allow for one method functionality of creating notes, would require rewrite of entire code.
+
+
+
+//FIXME: BUG WITH MULTIPLE NOTES!! CREATING NEW NOTE, EDITING A DIFFERENT EXISITING NOTES WONT UPDATE NAMES.
 public class MainActivity extends AppCompatActivity {
     //DECLARED VARS
     Button btnCreateNote, newNoteButton; //ui buttons.
