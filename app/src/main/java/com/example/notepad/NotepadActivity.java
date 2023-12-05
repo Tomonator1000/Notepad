@@ -9,8 +9,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 public class NotepadActivity extends AppCompatActivity {
-    //Second Activity, will open up a note and populate the note fields if data resides.
-    //DECLARED VARS
+    //Second Activity, will open up the note you clicked and populate the note fields if there is data saved in that note
     EditText noteName, noteNote; //UI Text Boxes
     Button noteSave, noteCancel; //ui buttons (not used much)
     Intent MainActivity; //was used to swap between activities, but was removed for finish();
@@ -20,63 +19,69 @@ public class NotepadActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_notepad);
-        notepadDatabase = NotepadDatabase.getInstance(); //gets instance of database / array
+        //new NotepadDatabase();
+        notepadDatabase = NotepadDatabase.getInstance();
 
-        //defaults boolean to false for use of creation/deletion checks
+        //sets booleans so checks are only true if set by a method later
         notepadDatabase.setCreateNewNote(false);
         notepadDatabase.setDeleteNote(false);
         onInit();
 
         MainActivity = new Intent(this, MainActivity.class);
     }
-    protected void onInit(){ //INiTIALIZED VARS
+
+    protected void onInit(){
         noteName = findViewById(R.id.etNoteName);
         noteNote = findViewById(R.id.etNoteNote);
         noteSave = findViewById(R.id.btnSaveEditNote);
         noteCancel = findViewById(R.id.btnCancelEditNote);
 
         if(notepadDatabase.getNotepad()[notepadDatabase.getArrayIndex()] != null){
-            //populates note text boxes if index in array is not empty.
+            //checks if the index this note is assigned to is empty or not, if not, it will populate the fields
             noteName.setText(notepadDatabase.getNotepad()[notepadDatabase.getArrayIndex()].getTitle());
             noteNote.setText(notepadDatabase.getNotepad()[notepadDatabase.getArrayIndex()].getNote());
         }
+
     }
 
-    public void onSaveClick(View v){ //onClick to save edit note.
+
+    public void onCancelClick(View v){
+        //just sends you back if your cancel
         int buttonId = getIntent().getIntExtra("button", -1); //gets the extra that was passed in from MainActivity
-        if(!(noteName.getText().toString().isEmpty()) && buttonId != -1){
-            //saves note title
-            notepadDatabase.setNotepadIndex(buttonId, noteName.getText().toString());
-            if(!noteNote.getText().toString().isEmpty()){
-                //saves note text
-                notepadDatabase.setNotepadIndex(buttonId, noteName.getText().toString(), noteNote.getText().toString());
-            }
-            //sets create note check to true, (only 1 new note at a time).
-            notepadDatabase.setCreateNewNote(true);
-        } else {
-            //defaults note title value to "NOTE #1", etc)
-            notepadDatabase.setNotepadIndex(buttonId, "NOTE " + (buttonId + 1));
-            notepadDatabase.setCreateNewNote(true);
-        }
-        finish(); //returns to previous activity.
-    }
-    public void onDeleteClick(View v){
-        //sets check to delete note and allow creation of new note.
-        //deletes current index
-        int buttonId = getIntent().getIntExtra("button", -1);
-        notepadDatabase.deleteNotepadIndex(buttonId);
-        notepadDatabase.setDeleteNote(true);
-        notepadDatabase.setCreateNewNote(true);
-        finish(); //returns to previous activity
-    }
-    public void onCancelClick(View v){ //onClick for canceling of edit note (similar to toggleUI)
-        int buttonId = getIntent().getIntExtra("button", -1); //gets the extra that was passed from MainActivity
         if(noteName.getText().toString().isEmpty()){
-            //allows creation of new note & defaults note name value.
             notepadDatabase.setNotepadIndex(buttonId, "NOTE " + (buttonId + 1));
             notepadDatabase.setCreateNewNote(true);
         }
         MainActivity.addFlags(Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT);
-        finish(); //returns to previous activity.
+        finish();
+    }
+
+    public void onSaveClick(View v){
+        //saves the note to the current index the buttonid is on
+        int buttonId = getIntent().getIntExtra("button", -1); //gets the extra that was passed in from MainActivity
+        if(!(noteName.getText().toString().isEmpty()) && buttonId != -1){
+            //runs if the name is not empty and the extra that was passed in was not a default value
+            notepadDatabase.setNotepadIndex(buttonId, noteName.getText().toString());
+            if(!noteNote.getText().toString().isEmpty()){
+                //runs if the note has text in it
+                notepadDatabase.setNotepadIndex(buttonId, noteName.getText().toString(), noteNote.getText().toString());
+            }
+            //sets the boolean to true so you can create a new note (don't want user spam clicking create new note)
+            notepadDatabase.setCreateNewNote(true);
+        } else {
+            notepadDatabase.setNotepadIndex(buttonId, "NOTE " + (buttonId + 1));
+            notepadDatabase.setCreateNewNote(true);
+        }
+        finish();
+    }
+
+    public void onDeleteClick(View v){
+        //deletes the notepad index and sets the boolean to true so the app can
+        //know to delete the button when the app returns to MainActivity
+        int buttonId = getIntent().getIntExtra("button", -1);
+        notepadDatabase.deleteNotepadIndex(buttonId);
+        notepadDatabase.setDeleteNote(true);
+        notepadDatabase.setCreateNewNote(false);
+        finish();
     }
 }
