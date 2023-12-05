@@ -100,26 +100,25 @@ public class MainActivity extends AppCompatActivity {
             btnCreateNote.setClickable(true);
             btnCreateNote.setText("CREATE NEW NOTE");
         }
-        //ensures the method does not run on start
-        if(objectsInList() != 0){
-            //finds the group of buttons in the buttonLayout and makes it a ViewGroup
-            ViewGroup parentLayout = findViewById(R.id.buttonLayout);
 
-            if(notepadDatabase.isDeleteNote()){
-                //save the button from earlier for quick and easy deletion
-                buttonLayout.removeView(currentButton);
-                count--;
-            }
-            for (int i = 0; i < parentLayout.getChildCount(); i++) {
-                //hooks up every button to a childView under the parent view
-                View childView = parentLayout.getChildAt(i);
+        //finds the group of buttons in the buttonLayout and makes it a ViewGroup
+        ViewGroup parentLayout = findViewById(R.id.buttonLayout);
 
-                //if statement checks if its the right button then renames it
-                if (childView instanceof Button && childView.getId() == index) {
-                    ((Button) childView).setText(notepadDatabase.getNotepad()[index].getTitle());
-                }
+        if(notepadDatabase.isDeleteNote()){
+            //save the button from earlier for quick and easy deletion
+            buttonLayout.removeView(currentButton);
+            count--;
+        }
+        for (int i = 0; i < parentLayout.getChildCount(); i++) {
+            //hooks up every button to a childView under the parent view
+            View childView = parentLayout.getChildAt(i);
+
+            //if statement checks if its the right button then renames it
+            if (childView instanceof Button && childView.getId() == index) {
+                ((Button) childView).setText(notepadDatabase.getNotepad()[index].getTitle());
             }
         }
+
     }
 
     public int nextAvailableID(){
