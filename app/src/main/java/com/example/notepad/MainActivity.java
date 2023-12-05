@@ -22,8 +22,12 @@ public class MainActivity extends AppCompatActivity {
     LinearLayout buttonLayout; //Layout for buttons so we can dynamically make buttons
     Intent NotepadActivity; //The notepad activity that we use to start a separate UI for notes
     int count = 0, index; //count counts how many buttons have been made, index is the current index the app is on
-    NotepadDatabase notepadDatabase; //database for all out notes
+    NotepadDatabase notepadDatabase; //database for all our notes
     Button currentButton; //dynamically created button used to open notes
+
+    public int getCount() {
+        return count;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,6 +77,7 @@ public class MainActivity extends AppCompatActivity {
         newNoteButton.setOnClickListener(v1 -> openNote((Button) v1));
 
         btnCreateNote.setClickable(false);
+        btnCreateNote.setText("New Note #" + count + " WAS CREATED!");
     }
 
     public void openNote(Button button) {
@@ -93,6 +98,7 @@ public class MainActivity extends AppCompatActivity {
         if(notepadDatabase.isCreateNewNote()) {
             //allows the user to create a new note if they edited the last note
             btnCreateNote.setClickable(true);
+            btnCreateNote.setText("CREATE NEW NOTE");
         }
         //ensures the method does not run on start
         if(objectsInList() != 0){

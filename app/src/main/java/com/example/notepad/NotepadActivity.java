@@ -41,6 +41,7 @@ public class NotepadActivity extends AppCompatActivity {
             noteName.setText(notepadDatabase.getNotepad()[notepadDatabase.getArrayIndex()].getTitle());
             noteNote.setText(notepadDatabase.getNotepad()[notepadDatabase.getArrayIndex()].getNote());
         }
+
     }
 
 
@@ -62,6 +63,8 @@ public class NotepadActivity extends AppCompatActivity {
             }
             //sets the boolean to true so you can create a new note (don't want user spam clicking create new note)
             notepadDatabase.setCreateNewNote(true);
+        } else {
+            notepadDatabase.setNotepadIndex(buttonId, "NOTE " + (buttonId + 1));
         }
         finish();
     }

@@ -2,8 +2,7 @@ package com.example.notepad;
 
 public class Notepad {
     //Notepad class, used to make an array so data can be saved inside the array and accessed easily
-    private String title;
-    private String note;
+    private String title, note;
 
     //getters and setters
     public String getTitle() {
