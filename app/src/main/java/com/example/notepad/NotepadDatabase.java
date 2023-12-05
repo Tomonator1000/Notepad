@@ -50,6 +50,10 @@ public class NotepadDatabase {
     }
     public void setNotepadIndex(int arrayIndex, String title) {
         //used to set only the name variable at a given index, used when no note is set, but a title was
+        if(getNotepad[arrayIndex] == null){
+            Notepad n = new Notepad();
+            getNotepad[arrayIndex] = n;
+        }
         getNotepad[arrayIndex].setTitle(title);
     }
     public void deleteNotepadIndex(int arrayIndex){
