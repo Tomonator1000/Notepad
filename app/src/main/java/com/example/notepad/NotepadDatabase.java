@@ -51,7 +51,7 @@ public class NotepadDatabase {
         getNotepad[arrayIndex].setTitle(title);
     }
     public void deleteNotepadIndex(int arrayIndex){
-       getNotepad[arrayIndex] = null;
+        getNotepad[arrayIndex] = null;
     }
 
     public boolean isDeleteNote() {
