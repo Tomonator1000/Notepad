@@ -62,7 +62,7 @@ public class NotepadDatabase {
     }
 
 
-    public void setGetNotepad(Notepad[] getNotepad) { //setNotepad to recreate & copy exisiting array over.
+    public void setGetNotepad(Notepad[] getNotepad) { //setNotepad to recreate & copy existing array over.
         this.getNotepad = getNotepad;
     }
 }

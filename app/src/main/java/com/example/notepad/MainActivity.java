@@ -13,13 +13,10 @@ import android.view.ViewOutlineProvider;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
+
+
 //FIXME: escape functionality bug
-//FIXME: clicking existing note after creating new note will result in empty text on button when returning back to mainactivity.
 //TODO: allow for one method functionality of creating notes, would require rewrite of entire code.
-
-
-
-//FIXME: BUG WITH MULTIPLE NOTES!! CREATING NEW NOTE, EDITING A DIFFERENT EXISITING NOTES WONT UPDATE NAMES.
 public class MainActivity extends AppCompatActivity {
     //DECLARED VARS
     Button btnCreateNote, newNoteButton; //ui buttons.
@@ -63,12 +60,12 @@ public class MainActivity extends AppCompatActivity {
         drawable.setColor(Color.LTGRAY);
         newNoteButton.setBackground(drawable); //sets properties to new instance of button
 
-        //adds mew button to layout/scroll view
+        //adds new button to layout/scroll view
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 250);
         buttonLayout.addView(newNoteButton, lp);
 
         //creates new instance of notepad to save to notepad database array.
-        notepadDatabase.getNotepad()[index] = new Notepad();
+        notepadDatabase.getNotepad()[index] = new Notepad(index);
         System.out.println(index); //sout for index
 
         //click listener used to determine what id the button is (uses lambda)
@@ -106,9 +103,17 @@ public class MainActivity extends AppCompatActivity {
             //hooks up every button to a childView under the parent view
             View childView = parentLayout.getChildAt(i);
 
-            if (childView instanceof Button && childView.getId() == index) {
+            //checks if its the right button and if the buttonID = the childview we set earlier
+            if (childView instanceof Button) {
+                int buttonId = childView.getId();
                 //renames button if button check is valid
-                ((Button) childView).setText(notepadDatabase.getNotepad()[index].getTitle());
+                if(notepadDatabase.getNotepad()[buttonId].getTitle() != null) {
+                    ((Button) childView).setText(notepadDatabase.getNotepad()[buttonId].getTitle());
+                }
+                else{
+                    notepadDatabase.setNotepadIndex(buttonId, "Note " + buttonId);
+                    ((Button) childView).setText(notepadDatabase.getNotepad()[buttonId].getTitle());
+                }
             }
         }
 
