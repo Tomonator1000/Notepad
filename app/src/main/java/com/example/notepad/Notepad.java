@@ -4,19 +4,15 @@ public class Notepad {
     //Notepad class, saved within NotepadDatabase array.
     //DECLARED VARS
     private String title, note;
-    private int id;
 
-    public Notepad(int id){
-        setId(id);
+    public Notepad(String name, String note){
+        title = name;
+        this.note = note;
+    }
+    public Notepad(){
+
     }
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
 
     //GETTERS & SETTERS
     public String getTitle() {

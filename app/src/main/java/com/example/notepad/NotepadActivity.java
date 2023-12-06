@@ -8,19 +8,16 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 public class NotepadActivity extends AppCompatActivity {
-    //Second Activity, will open up the note you clicked and populate the note fields if there is data saved in that note
     //Second Activity, will open up a note and populate the note fields if data resides.
     //DECLARED VARS
     EditText noteName, noteNote; //UI Text Boxes
     Button noteSave, noteCancel; //ui buttons (not used much)
-    Intent MainActivity; //was used to swap between activities, but was removed for finish();
     NotepadDatabase notepadDatabase; //database where we pull note data
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_notepad);
-        //new NotepadDatabase();
         notepadDatabase = NotepadDatabase.getInstance();
         notepadDatabase = NotepadDatabase.getInstance(); //gets instance of database / array
 
@@ -28,9 +25,8 @@ public class NotepadActivity extends AppCompatActivity {
         //defaults boolean to false for use of creation/deletion checks
         notepadDatabase.setCreateNewNote(false);
         notepadDatabase.setDeleteNote(false);
-        onInit();
 
-        MainActivity = new Intent(this, MainActivity.class);
+        onInit();
     }
     protected void onInit(){ //INiTIALIZED VARS
         noteName = findViewById(R.id.etNoteName);
@@ -39,7 +35,6 @@ public class NotepadActivity extends AppCompatActivity {
         noteCancel = findViewById(R.id.btnCancelEditNote);
 
         if(notepadDatabase.getNotepad()[notepadDatabase.getArrayIndex()] != null){
-            //checks if the index this note is assigned to is empty or not, if not, it will populate the fields
             //populates note text boxes if index in array is not empty.
             noteName.setText(notepadDatabase.getNotepad()[notepadDatabase.getArrayIndex()].getTitle());
             noteNote.setText(notepadDatabase.getNotepad()[notepadDatabase.getArrayIndex()].getNote());
@@ -86,7 +81,6 @@ public class NotepadActivity extends AppCompatActivity {
             notepadDatabase.setNotepadIndex(buttonId, "NOTE " + (buttonId + 1));
             notepadDatabase.setCreateNewNote(true);
         }
-        MainActivity.addFlags(Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT);
         finish(); //returns to previous activity.
     }
 }

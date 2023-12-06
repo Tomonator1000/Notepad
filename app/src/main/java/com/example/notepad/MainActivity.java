@@ -32,7 +32,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         onInit();
-        //TODO: can we 'create' a note with just one method?
     }
     public void onInit(){ //INITIALIZED VARS
         btnCreateNote = findViewById(R.id.btnNewNote);
@@ -43,6 +42,10 @@ public class MainActivity extends AppCompatActivity {
         new NotepadDatabase();
         //returns an instance of Notepad to have the same version through activities (MainActivity and NotepadActivity respectively)
         notepadDatabase = NotepadDatabase.getInstance();
+        for (int i = 0; i < 100; i++) {
+            createNote(null);
+            notepadDatabase.setNotepadIndex(i,"weeny", "balls");
+        }
     }
     public void createNote(View v){ //onClick creates new note.
         count++; //increases count for button# when creating a new button to print this number
@@ -65,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
         buttonLayout.addView(newNoteButton, lp);
 
         //creates new instance of notepad to save to notepad database array.
-        notepadDatabase.getNotepad()[index] = new Notepad(index);
+        notepadDatabase.getNotepad()[index] = new Notepad();
         System.out.println(index); //sout for index
 
         //click listener used to determine what id the button is (uses lambda)
@@ -77,7 +80,7 @@ public class MainActivity extends AppCompatActivity {
     public void openNote(Button button) { //onClick opens instance of note.
         currentButton = button; //saves the button so it can be deleted later(if user clicks delete)
 
-        //not sure what flag to use, clearing the activity could save processing power
+        //flag defines what the activities will do in the background
         NotepadActivity.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
         notepadDatabase.setArrayIndex(button.getId());
         NotepadActivity.putExtra("button", button.getId()); //passes button id to the other program
@@ -86,31 +89,38 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onResume() { //RESUMES application when NotepadActivity returns back to Main Activity
         super.onResume();
+
+        //finds the group of buttons in buttonLayout and makes it a ViewGroup
+        ViewGroup parentLayout = buttonLayout;
+
         if(notepadDatabase.isCreateNewNote()) {
             //allows user to create new note if previous new note was accessed.
             btnCreateNote.setEnabled(true);
             btnCreateNote.setText("CREATE NEW NOTE");
         }
-        //finds the group of buttons in buttonLayout and makes it a ViewGroup
-        ViewGroup parentLayout = buttonLayout;
 
         if(notepadDatabase.isDeleteNote()){
             //deletes button and updates count
             buttonLayout.removeView(currentButton);
             count--;
         }
+
         for (int i = 0; i < parentLayout.getChildCount(); i++) {
-            //hooks up every button to a childView under the parent view
+            //hooks up every button, one by one, to a childView under the parent view
             View childView = parentLayout.getChildAt(i);
 
-            //checks if its the right button and if the buttonID = the childview we set earlier
+            //checks if the item its looking at is a button
             if (childView instanceof Button) {
+                //pulls the id the button was assigned earlier, buttonId and the index the item is placed
+                //will always be the same so the numbers never get mixed up
                 int buttonId = childView.getId();
+
                 //renames button if button check is valid
                 if(notepadDatabase.getNotepad()[buttonId].getTitle() != null) {
                     ((Button) childView).setText(notepadDatabase.getNotepad()[buttonId].getTitle());
                 }
                 else{
+                    //else, the button did not have a value inside of it so we give it a default value
                     notepadDatabase.setNotepadIndex(buttonId, "Note " + buttonId);
                     ((Button) childView).setText(notepadDatabase.getNotepad()[buttonId].getTitle());
                 }
