@@ -18,7 +18,6 @@ public class NotepadActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_notepad);
-        notepadDatabase = NotepadDatabase.getInstance();
         notepadDatabase = NotepadDatabase.getInstance(); //gets instance of database / array
 
         //sets booleans so checks are only true if set by a method later
@@ -53,18 +52,16 @@ public class NotepadActivity extends AppCompatActivity {
                 //saves note text
                 notepadDatabase.setNotepadIndex(buttonId, noteName.getText().toString(), noteNote.getText().toString());
             }
-            //sets the boolean to true so you can create a new note (don't want user spam clicking create new note)
-            //sets create note check to true, (only 1 new note at a time).
         } else {
             //defaults note title value to "NOTE #1", etc)
             notepadDatabase.setNotepadIndex(buttonId, "NOTE " + (buttonId + 1));
         }
+        //sets the boolean to true so you can create a new note (don't want user spam clicking create new note)
+        //sets create note check to true, (only 1 new note at a time).
         notepadDatabase.setCreateNewNote(true);
         finish(); //returns to previous activity.
     }
     public void onDeleteClick(View v){
-        //deletes the notepad index and sets the boolean to true so the app can
-        //know to delete the button when the app returns to MainActivity
         //sets check to delete note and allow creation of new note.
         //deletes current index
         int buttonId = getIntent().getIntExtra("button", -1);

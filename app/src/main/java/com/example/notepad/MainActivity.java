@@ -15,8 +15,6 @@ import android.widget.LinearLayout;
 import android.widget.ScrollView;
 
 
-//FIXME: escape functionality bug
-//TODO: allow for one method functionality of creating notes, would require rewrite of entire code.
 public class MainActivity extends AppCompatActivity {
     //DECLARED VARS
     Button btnCreateNote, newNoteButton; //ui buttons.
