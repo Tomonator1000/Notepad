@@ -67,7 +67,6 @@ public class NotepadActivity extends AppCompatActivity {
         int buttonId = getIntent().getIntExtra("button", -1);
         notepadDatabase.deleteNotepadIndex(buttonId);
         notepadDatabase.setDeleteNote(true);
-        //finish();
         notepadDatabase.setCreateNewNote(true);
         finish(); //returns to previous activity
     }

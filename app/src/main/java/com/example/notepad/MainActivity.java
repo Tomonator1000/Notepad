@@ -40,10 +40,6 @@ public class MainActivity extends AppCompatActivity {
         new NotepadDatabase();
         //returns an instance of Notepad to have the same version through activities (MainActivity and NotepadActivity respectively)
         notepadDatabase = NotepadDatabase.getInstance();
-        for (int i = 0; i < 100; i++) {
-            createNote(null);
-            notepadDatabase.setNotepadIndex(i,"weeny", "balls");
-        }
     }
     public void createNote(View v){ //onClick creates new note.
         count++; //increases count for button# when creating a new button to print this number
@@ -51,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
 
         //creates a new button
         newNoteButton = new Button(this);
-        newNoteButton.setText("(New) Note #" + count);
+        newNoteButton.setText("(New) Note #" + (index + 1));
         newNoteButton.setId(index); //sets ID for identification later(having index and button ID be the same number simplifies the process)
 
         //creates the properties for a new instance of a note button.
@@ -73,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
         newNoteButton.setOnClickListener(v1 -> openNote((Button) v1));
 
         btnCreateNote.setEnabled(false); //disables create note until new note has been accessed.
-        btnCreateNote.setText("New Note #" + count + " WAS CREATED!");
+        btnCreateNote.setText("New Note #" + (index + 1) + " WAS CREATED!");
     }
     public void openNote(Button button) { //onClick opens instance of note.
         currentButton = button; //saves the button so it can be deleted later(if user clicks delete)
@@ -104,22 +100,23 @@ public class MainActivity extends AppCompatActivity {
         }
 
         for (int i = 0; i < parentLayout.getChildCount(); i++) {
+            //cycles through the children of buttonLayout/parentLayout
             //hooks up every button, one by one, to a childView under the parent view
             View childView = parentLayout.getChildAt(i);
 
-            //checks if the item its looking at is a button
+            //checks if the item its looking at is a button (for safety)
             if (childView instanceof Button) {
-                //pulls the id the button was assigned earlier, buttonId and the index the item is placed
-                //will always be the same so the numbers never get mixed up
+                //pulls the id the button was assigned earlier, buttonId, and the index the item is placed
+                //will always be on the same index so the numbers never get mixed up
                 int buttonId = childView.getId();
 
-                //renames button if button check is valid
+                //renames button if there is a title linked with that button
                 if(notepadDatabase.getNotepad()[buttonId].getTitle() != null) {
                     ((Button) childView).setText(notepadDatabase.getNotepad()[buttonId].getTitle());
                 }
                 else{
-                    //else, the button did not have a value inside of it so we give it a default value
-                    notepadDatabase.setNotepadIndex(buttonId, "Note " + buttonId);
+                    //else, the button did not have a title so its give a default value
+                    notepadDatabase.setNotepadIndex(buttonId, "Note " + (buttonId + 1));
                     ((Button) childView).setText(notepadDatabase.getNotepad()[buttonId].getTitle());
                 }
             }

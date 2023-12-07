@@ -6,7 +6,7 @@ public class Notepad {
     private String title, note;
 
     public Notepad(String name, String note){
-        title = name;
+        this.title = name;
         this.note = note;
     }
     public Notepad(){
