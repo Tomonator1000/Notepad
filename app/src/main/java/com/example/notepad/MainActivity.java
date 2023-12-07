@@ -40,10 +40,6 @@ public class MainActivity extends AppCompatActivity {
         new NotepadDatabase();
         //returns an instance of Notepad to have the same version through activities (MainActivity and NotepadActivity respectively)
         notepadDatabase = NotepadDatabase.getInstance();
-        for (int i = 0; i < 100; i++) {
-            createNote(null);
-            notepadDatabase.setNotepadIndex(i,"weeny", "balls");
-        }
     }
     public void createNote(View v){ //onClick creates new note.
         count++; //increases count for button# when creating a new button to print this number
