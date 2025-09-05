@@ -121,10 +121,6 @@ app/src/main/res/
 4. Push to the branch (`git push origin feature/amazing-feature`)
 5. Open a Pull Request
 
-## License
+## Author(s)
 
-This project is open source. Please check with the repository owner for specific licensing terms.
-
-## Support
-
-For questions or issues, please open an issue on the GitHub repository.
+- [**Ethan Townsend (snxethan)**](www.ethantownsend.dev)
